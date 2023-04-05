@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS incomes (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    sum BIGINT NOT NULL,
+    `date` date NOT NULL,
+    `comment` VARCHAR(255),
+);
