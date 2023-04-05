@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS category
+(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    category_name VARCHAR(70)
+);

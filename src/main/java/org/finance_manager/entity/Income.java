@@ -18,18 +18,21 @@ public class Income {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long sum;
-    private LocalDate date;
+    @Column(name = "income_sum")
+    private Long incomeSum;
+
+    @Column(name = "income_date")
+    private LocalDate incomeDate;
     private String comment;
 
     public Income(Long sum, LocalDate date, String comment) {
-        this.sum = sum;
-        this.date = date;
+        this.incomeSum = incomeSum;
+        this.incomeDate = incomeDate;
         this.comment = comment;
     }
 
     public Income(Long sum, LocalDate date) {
-        this.sum = sum;
-        this.date = date;
+        this.incomeSum = incomeSum;
+        this.incomeDate = incomeDate;
     }
 }

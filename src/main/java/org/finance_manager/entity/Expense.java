@@ -18,8 +18,12 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long sum;
-    private LocalDate date;
+    @Column(name = "expense_sum")
+    private Long expenseSum;
+
+    @Column(name = "expense_date")
+    private LocalDate expenseDate;
+
     private String comment;
 
     @ManyToOne
