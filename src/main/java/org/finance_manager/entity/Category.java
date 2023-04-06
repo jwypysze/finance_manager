@@ -23,7 +23,7 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Set<Expense> expenses;
 
-    public Category(String name) {
+    public Category(String categoryName) {
         this.categoryName = categoryName;
     }
 }

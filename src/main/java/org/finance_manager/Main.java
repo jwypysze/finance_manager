@@ -1,5 +1,8 @@
 package org.finance_manager;
 
+import org.finance_manager.repository.CategoryRepository;
+import org.finance_manager.service.DemoApp;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,7 +21,7 @@ public class Main {
                 (JDBC_URL + System.getenv(DB_NAME_ENV), System.getenv(DB_USER_ENV), System.getenv(DB_PASSWORD_ENV));){
             DbInitializer dbInitializer = new DbInitializer(connection);
             dbInitializer.initDb();
-
+            DemoApp.play();
 
         }
 
