@@ -1,10 +1,14 @@
 package org.finance_manager.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import org.finance_manager.DbConnection;
 import org.finance_manager.entity.Category;
 import org.finance_manager.entity.Expense;
+import org.finance_manager.entity.Income;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,5 +35,22 @@ public class ExpenseRepository {
         Expense expense = entityManager.find(Expense.class, selectedExpenseId);
         entityManager.close();
         return expense;
+    }
+
+    public Expense findByExpenseSumAndDate(Double expenseSum, LocalDate expenseDate) throws NoResultException {
+        EntityManager entityManager = DbConnection.getEntityManager();
+        TypedQuery<Expense> query = entityManager.createQuery
+                ("FROM Expense e WHERE e.expenseSum = :expenseSum AND e.expenseDate = :expenseDate", Expense.class);
+        query.setParameter("expenseSum", expenseSum);
+        query.setParameter("expenseDate", expenseDate);
+        return query.getSingleResult();
+    }
+
+    public void deleteExpenseByExpenseSumAndDate(Expense expense) {
+        EntityManager entityManager = DbConnection.getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.remove(entityManager.contains(expense) ? expense : entityManager.merge(expense));
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

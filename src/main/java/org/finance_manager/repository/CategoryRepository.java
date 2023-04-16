@@ -1,8 +1,6 @@
 package org.finance_manager.repository;
 
-import com.mysql.cj.util.StringUtils;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.finance_manager.DbConnection;
@@ -10,7 +8,6 @@ import org.finance_manager.entity.Category;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public class CategoryRepository {
@@ -36,16 +33,16 @@ public class CategoryRepository {
         EntityManager entityManager = DbConnection.getEntityManager();
         TypedQuery<Category> query = entityManager.createQuery
                     ("FROM Category c WHERE c.categoryName = :categoryName", Category.class);
-        Category category = query.setParameter("categoryName", categoryName).getSingleResult();
-        entityManager.close();
-        return category;
+        query.setParameter("categoryName", categoryName);
+        return query.getSingleResult();
     }
 
-    public void deleteCategory(Category category) {
+    public void deleteCategoryByName(Category category) {
         EntityManager entityManager = DbConnection.getEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.remove(category);
+        entityManager.remove(entityManager.contains(category) ? category : entityManager.merge(category));
         entityManager.getTransaction().commit();
         entityManager.close();
     }
+
 }

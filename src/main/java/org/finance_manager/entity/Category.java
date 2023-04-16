@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
 import java.util.Set;
 
 @Entity
@@ -26,4 +28,6 @@ public class Category {
     public Category(String categoryName) {
         this.categoryName = categoryName;
     }
+
+
 }

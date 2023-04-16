@@ -1,10 +1,8 @@
 package org.finance_manager;
 
-import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.metamodel.Metamodel;
-
-import java.util.Map;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class DbConnection {
     private static final EntityManagerFactory entityManagerFactory =

@@ -1,12 +1,12 @@
 package org.finance_manager.service;
 
 import com.mysql.cj.util.StringUtils;
-import jakarta.persistence.EntityManager;
-import org.finance_manager.DbConnection;
+import jakarta.persistence.NoResultException;
 import org.finance_manager.dto.SimpleCategoryDto;
 import org.finance_manager.entity.Category;
 import org.finance_manager.repository.CategoryRepository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -17,10 +17,17 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public void addCategory(String categoryName) throws IllegalAccessException {
-        if (!StringUtils.isNullOrEmpty(categoryName)) {
+    public void addCategory(String categoryName) throws IllegalAccessException, IllegalArgumentException {
+        List<SimpleCategoryDto> all = findAll();
+        for (SimpleCategoryDto s : all) {
+            String categoryName1 = s.getCategoryName();
+            if (categoryName1.equalsIgnoreCase(categoryName)) {
+                throw new IllegalArgumentException("The provided categoryName already exists!");
+            }
+        }
+        if ((!StringUtils.isNullOrEmpty(categoryName))) {
 
-            Category category = new Category(categoryName);
+            Category category = new Category(categoryName.toLowerCase());
 
             categoryRepository.insert(category);
         } else {
@@ -37,11 +44,19 @@ public class CategoryService {
     }
 
 
-    public void deleteByCategoryName(String nameOfCategoryToDelete) {
-        Category category = categoryRepository.findByCategoryName(nameOfCategoryToDelete);
-        categoryRepository.deleteCategory(category);
+    public List<SimpleCategoryDto> findByCategoryName(String categoryName) {
+        Category categoryToBeFindByName = categoryRepository.findByCategoryName(categoryName.toLowerCase());
+        List<Category> categories = Arrays.asList(categoryToBeFindByName);
+        return categories.stream()
+                .map(category -> new SimpleCategoryDto(category.getId(), category.getCategoryName())).toList();
     }
 
 
 
+    public void deleteCategoryByName(String nameOfCategoryToDelete) throws NoResultException {
+        Category category = categoryRepository.findByCategoryName(nameOfCategoryToDelete);
+        categoryRepository.deleteCategoryByName(category);
+
+    }
 }
+

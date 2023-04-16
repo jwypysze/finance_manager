@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
@@ -19,20 +20,20 @@ public class Income {
     private Long id;
 
     @Column(name = "income_sum")
-    private Long incomeSum;
+    private Double incomeSum;
 
     @Column(name = "income_date")
+    @CreationTimestamp
     private LocalDate incomeDate;
     private String comment;
 
-    public Income(Long sum, LocalDate date, String comment) {
+
+    public Income(Double incomeSum, String comment) {
         this.incomeSum = incomeSum;
-        this.incomeDate = incomeDate;
         this.comment = comment;
     }
 
-    public Income(Long sum, LocalDate date) {
+    public Income(Double incomeSum) {
         this.incomeSum = incomeSum;
-        this.incomeDate = incomeDate;
     }
 }
