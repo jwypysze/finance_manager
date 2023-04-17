@@ -59,4 +59,12 @@ public class ExpenseService {
                         e.getExpenseDate(), e.getComment(), e.getCategory().getId()))
                     .toList();
     }
+
+    public List<SimpleExpenseDto> findExpensesByCategoryName(Category category) {
+        List<Expense> expensesByCategoryName = expenseRepository.findExpensesByCategoryName(category);
+        return expensesByCategoryName.stream()
+                .map(e -> new SimpleExpenseDto(e.getId(), e.getExpenseSum(),
+                        e.getExpenseDate(), e.getComment(), e.getCategory().getId()))
+                .toList();
+    }
 }

@@ -1,10 +1,7 @@
 package org.finance_manager.service;
 
-import com.mysql.cj.util.StringUtils;
 import jakarta.persistence.NoResultException;
-import org.finance_manager.dto.SimpleCategoryDto;
 import org.finance_manager.dto.SimpleIncomeDto;
-import org.finance_manager.entity.Category;
 import org.finance_manager.entity.Income;
 import org.finance_manager.repository.IncomeRepository;
 

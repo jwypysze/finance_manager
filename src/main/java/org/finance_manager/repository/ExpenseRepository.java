@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.finance_manager.DbConnection;
+import org.finance_manager.entity.Category;
 import org.finance_manager.entity.Expense;
 
 import java.time.LocalDate;
@@ -61,4 +62,13 @@ public class ExpenseRepository {
         query.setParameter("toDate", toDate);
         return query.getResultList();
     }
+
+    public List<Expense> findExpensesByCategoryName(Category category) {
+        EntityManager entityManager = DbConnection.getEntityManager();
+        TypedQuery<Expense> query = entityManager.createQuery
+                ("FROM Expense e WHERE e.category = :category", Expense.class);
+        query.setParameter("category", category);
+        return query.getResultList();
+    }
+
 }

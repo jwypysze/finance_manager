@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.finance_manager.DbConnection;
-import org.finance_manager.entity.Category;
 import org.finance_manager.entity.Income;
 
 import java.time.LocalDate;

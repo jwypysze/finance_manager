@@ -11,6 +11,7 @@ import org.finance_manager.repository.IncomeRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -152,8 +153,7 @@ public class DemoApp {
                         System.err.println("The expense table is empty.");
                     }
                 }
-                case 7-> {
-                    // wyświetlenie wydatków na podstawie zakresu dat
+                case 7 -> {
                     System.out.println("In this option you can show expenses based on the range of dates (FROM - TO)");
                     System.out.println("Type the first date (FROM)");
                     System.out.println("Please use format YYYY-MM-DD");
@@ -182,6 +182,30 @@ public class DemoApp {
                         System.err.println("The provided format of date is incorrect!\nUse: YYYY-MM-DD");
                     }
                 }
+                case 8 -> {
+                    System.out.println("Type the name of category of the expenses you want to show");
+                    String expenseCategory = SCANNER.nextLine().toLowerCase();
+                    try {
+                        Category byCategoryName = categoryRepository.findByCategoryName(expenseCategory);
+                        List<Category> categories = Arrays.asList(byCategoryName);
+                        if (!categories.isEmpty()) {
+                            List<SimpleExpenseDto> expensesByCategoryName =
+                                    expenseService.findExpensesByCategoryName(byCategoryName);
+                            if (!expensesByCategoryName.isEmpty()) {
+                                expensesByCategoryName.forEach(System.out::println);
+                            } else {
+                                System.err.println("There are no expenses with the provided category's name");
+                            }
+                        } else {
+                            System.err.println("The provided name of category doesn't exist!");
+                        }
+                    } catch (NoResultException e) {
+                        System.err.println("The provided name of category doesn't exist!");
+                    }
+                }
+                case 9 -> {
+
+                }
                 case 10 -> {
                     List<SimpleIncomeDto> simpleIncomeDtoList = incomeService.findAll();
                     if (!simpleIncomeDtoList.isEmpty()) {
@@ -190,6 +214,9 @@ public class DemoApp {
                     } else {
                         System.err.println("The income table is empty.");
                     }
+                }
+                case 11 -> {
+
                 }
                 case 12 -> {
                     System.out.println("Type category name");
@@ -200,7 +227,6 @@ public class DemoApp {
                         System.err.println(e.getMessage());;
                     }
                 }
-
                 case 13 -> {
                     System.out.println("Provide name of category to delete:");
                     String nameOfCategoryToDelete = SCANNER.nextLine();
@@ -219,7 +245,6 @@ public class DemoApp {
                     } else {
                         System.err.println("The category table is empty.");
                     }
-
                 }
                 default -> {
                     System.out.println("The provided text is wrong. Please use numbers from menu");
