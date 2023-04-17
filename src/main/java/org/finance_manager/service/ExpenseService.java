@@ -2,11 +2,8 @@ package org.finance_manager.service;
 
 import jakarta.persistence.NoResultException;
 import org.finance_manager.dto.SimpleExpenseDto;
-import org.finance_manager.dto.SimpleIncomeDto;
 import org.finance_manager.entity.Category;
 import org.finance_manager.entity.Expense;
-import org.finance_manager.entity.Income;
-import org.finance_manager.repository.CategoryRepository;
 import org.finance_manager.repository.ExpenseRepository;
 
 import java.time.LocalDate;
@@ -55,4 +52,11 @@ public class ExpenseService {
     }
 
 
+    public List<SimpleExpenseDto> findExpensesByTheRangeOfDates(LocalDate fromDate, LocalDate toDate) {
+        List<Expense> expensesByTheRangeOfDates = expenseRepository.findExpensesByTheRangeOfDates(fromDate, toDate);
+        return expensesByTheRangeOfDates.stream()
+                    .map(e -> new SimpleExpenseDto(e.getId(), e.getExpenseSum(),
+                        e.getExpenseDate(), e.getComment(), e.getCategory().getId()))
+                    .toList();
+    }
 }

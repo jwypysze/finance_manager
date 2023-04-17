@@ -11,7 +11,6 @@ import org.finance_manager.repository.IncomeRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -151,6 +150,36 @@ public class DemoApp {
                                 System.out.println(simpleExpenseDto.toString()));
                     } else {
                         System.err.println("The expense table is empty.");
+                    }
+                }
+                case 7-> {
+                    // wyświetlenie wydatków na podstawie zakresu dat
+                    System.out.println("In this option you can show expenses based on the range of dates (FROM - TO)");
+                    System.out.println("Type the first date (FROM)");
+                    System.out.println("Please use format YYYY-MM-DD");
+                    String fromDateAsString = SCANNER.nextLine();
+                    System.out.println("Type the second date (TO)");
+                    System.out.println("Please use format YYYY-MM-DD");
+                    String toDateAsString = SCANNER.nextLine();
+                    try {
+                        LocalDate fromDate = LocalDate.parse(fromDateAsString);
+                        LocalDate toDate = LocalDate.parse(toDateAsString);
+                        if (fromDate.isBefore(toDate) || fromDate.equals(toDate)) {
+                            List<SimpleExpenseDto> expensesByTheRangeOfDates = expenseService.
+                                    findExpensesByTheRangeOfDates(fromDate, toDate);
+                            if (!expensesByTheRangeOfDates.isEmpty()) {
+                                expensesByTheRangeOfDates.forEach(System.out::println);
+                            } else {
+                                System.err.println("There are no expenses in the provided period of time.");
+                            }
+                        } else {
+                            System.err.println
+                                    ("The provided dates are wrong!\n" +
+                                            "The first date (FROM) should be before the second date (TO) " +
+                                            "or they should be the same if you want to show expenses made on provided day!");
+                        }
+                    } catch (DateTimeParseException e) {
+                        System.err.println("The provided format of date is incorrect!\nUse: YYYY-MM-DD");
                     }
                 }
                 case 10 -> {

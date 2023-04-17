@@ -4,9 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.finance_manager.DbConnection;
-import org.finance_manager.entity.Category;
 import org.finance_manager.entity.Expense;
-import org.finance_manager.entity.Income;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -52,5 +50,15 @@ public class ExpenseRepository {
         entityManager.remove(entityManager.contains(expense) ? expense : entityManager.merge(expense));
         entityManager.getTransaction().commit();
         entityManager.close();
+    }
+
+
+    public List<Expense> findExpensesByTheRangeOfDates(LocalDate fromDate, LocalDate toDate) {
+        EntityManager entityManager = DbConnection.getEntityManager();
+        TypedQuery<Expense> query = entityManager.createQuery
+                ("FROM Expense e WHERE e.expenseDate BETWEEN :fromDate AND :toDate", Expense.class);
+        query.setParameter("fromDate", fromDate);
+        query.setParameter("toDate", toDate);
+        return query.getResultList();
     }
 }
