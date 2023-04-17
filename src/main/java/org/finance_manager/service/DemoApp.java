@@ -15,6 +15,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.finance_manager.service.Colour.*;
+
 public class DemoApp {
     private static final Scanner SCANNER = new Scanner(System.in);
     public static void play() {
@@ -118,8 +120,29 @@ public class DemoApp {
                     } catch (NoResultException e) {
                         System.err.println("The income with provided sum and date doesn't exist!");
                     }
-
-
+                }
+                case 5 -> {
+                    List<SimpleExpenseDto> allExpenses = expenseService.findAll();
+                    if (!allExpenses.isEmpty()) {
+                        System.out.println(ANSI_RED + "\t\t\t\t\t\t\t\t\t\tEXPENSES" + ANSI_RESET);
+                        System.out.printf("%10s %10s %15s %30s %15s %n", "ID", "SUM", "DATE", "COMMENT", "CATEGORY ID");
+                        allExpenses.forEach(expense ->
+                                System.out.printf("%10d %10.2f %15tF %30s %15d %n",
+                                        expense.getId(), expense.getExpenseSum(), expense.getExpenseDate(),
+                                        expense.getComment(), expense.getCategoryId()));
+                    } else {
+                        System.err.println("The expense table is empty.");
+                    }
+                    List<SimpleIncomeDto> allIncomes = incomeService.findAll();
+                    if (!allIncomes.isEmpty()) {
+                        System.out.println(ANSI_GREEN + "\t\t\t\t\t\t\t\tINCOMES" + ANSI_RESET);
+                        System.out.printf("%10s %10s %15s %30s %n", "ID", "SUM", "DATE", "COMMENT");
+                        allIncomes.forEach(income ->
+                                System.out.printf("%10d %10.2f %15tF %30s %n", income.getId(), income.getIncomeSum(),
+                                        income.getIncomeDate(), income.getComment()));
+                    } else {
+                        System.err.println("The income table is empty.");
+                    }
                 }
                 case 6 -> {
                     List<SimpleExpenseDto> simpleExpenseDtoList = expenseService.findAll();

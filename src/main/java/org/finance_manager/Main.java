@@ -1,11 +1,17 @@
 package org.finance_manager;
 
 import org.finance_manager.dto.SimpleCategoryDto;
+import org.finance_manager.dto.SimpleExpenseDto;
+import org.finance_manager.dto.SimpleIncomeDto;
 import org.finance_manager.entity.Category;
 import org.finance_manager.entity.Income;
 import org.finance_manager.repository.CategoryRepository;
+import org.finance_manager.repository.ExpenseRepository;
+import org.finance_manager.repository.IncomeRepository;
 import org.finance_manager.service.CategoryService;
 import org.finance_manager.service.DemoApp;
+import org.finance_manager.service.ExpenseService;
+import org.finance_manager.service.IncomeService;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,6 +19,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+
+import static org.finance_manager.service.Colour.*;
 
 public class Main {
 
