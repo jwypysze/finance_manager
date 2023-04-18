@@ -216,7 +216,57 @@ public class DemoApp {
                     }
                 }
                 case 11 -> {
-
+                    //wyświetl saldo
+                    System.out.println("In this option you can show the balance in the provided range of dates (FROM - TO)");
+                    System.out.println("Type the first date (FROM)");
+                    System.out.println("Please use format YYYY-MM-DD");
+                    String fromDateAsString = SCANNER.nextLine();
+                    System.out.println("Type the second date (TO)");
+                    System.out.println("Please use format YYYY-MM-DD");
+                    String toDateAsString = SCANNER.nextLine();
+                    try {
+                        LocalDate fromDate = LocalDate.parse(fromDateAsString);
+                        LocalDate toDate = LocalDate.parse(toDateAsString);
+                        if (fromDate.isBefore(toDate) || fromDate.equals(toDate)) {
+                            List<SimpleIncomeDto> incomesByTheRangeOfDates =
+                                    incomeService.findIncomesByTheRangeOfDates(fromDate, toDate);
+                            Double sumOfIncomes = 0D;
+                            for (SimpleIncomeDto s : incomesByTheRangeOfDates) {
+                                Double incomeSum = s.getIncomeSum();
+                                sumOfIncomes += incomeSum;
+                            }
+                            System.out.println
+                                    (ANSI_GREEN + "The sum of incomes in the provided period of time is: " + sumOfIncomes + ANSI_RESET);
+                            List<SimpleExpenseDto> expensesByTheRangeOfDates =
+                                    expenseService.findExpensesByTheRangeOfDates(fromDate, toDate);
+                            Double sumOfExpenses = 0D;
+                            for (SimpleExpenseDto s : expensesByTheRangeOfDates) {
+                                Double expenseSum = s.getExpenseSum();
+                                sumOfExpenses += expenseSum;
+                            }
+                            System.out.println
+                                    (ANSI_RED + "The sum of expenses in the provided period of time is: " + sumOfExpenses + ANSI_RESET);
+                            double balance = sumOfIncomes - sumOfExpenses;
+                            if (balance == 0) {
+                                System.out.println
+                                        (ANSI_BLUE + "The balance in the provided period of time is: " + balance + ANSI_RESET);
+                            } else if (balance < 0) {
+                                System.out.println
+                                        (ANSI_RED + "The balance in the provided period of time is: " + balance + ANSI_RESET);
+                            } else {
+                                System.out.println
+                                        (ANSI_GREEN + "The balance in the provided period of time is: " + balance + ANSI_RESET);
+                            }
+                        } else {
+                            System.err.println
+                                    ("The provided dates are wrong!\n" +
+                                            "The first date (FROM) should be before the second date (TO) " +
+                                            "or they should be the same if you want to " +
+                                            "show incomes and expenses made on provided day!");
+                        }
+                    } catch (DateTimeParseException e) {
+                        System.err.println("The provided format of date is incorrect!\nUse: YYYY-MM-DD");
+                    }
                 }
                 case 12 -> {
                     System.out.println("Type category name");

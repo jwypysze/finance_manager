@@ -25,5 +25,4 @@ public class SimpleExpenseDto {
         this.comment = comment;
         this.categoryId = categoryId;
     }
-
 }

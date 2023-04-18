@@ -7,6 +7,7 @@ import org.finance_manager.DbConnection;
 import org.finance_manager.entity.Income;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,5 +52,13 @@ public class IncomeRepository {
         entityManager.close();
     }
 
+    public List<Income> findIncomesByTheRangeOfDates(LocalDate fromDate, LocalDate toDate) {
+        EntityManager entityManager = DbConnection.getEntityManager();
+        TypedQuery<Income> query = entityManager.createQuery
+                ("FROM Income i WHERE i.incomeDate BETWEEN :fromDate AND : toDate", Income.class);
+        query.setParameter("fromDate", fromDate);
+        query.setParameter("toDate", toDate);
+        return query.getResultList();
+    }
 
 }

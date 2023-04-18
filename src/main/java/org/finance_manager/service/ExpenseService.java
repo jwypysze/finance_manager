@@ -1,6 +1,8 @@
 package org.finance_manager.service;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import org.finance_manager.DbConnection;
 import org.finance_manager.dto.SimpleExpenseDto;
 import org.finance_manager.entity.Category;
 import org.finance_manager.entity.Expense;
@@ -67,4 +69,5 @@ public class ExpenseService {
                         e.getExpenseDate(), e.getComment(), e.getCategory().getId()))
                 .toList();
     }
+
 }

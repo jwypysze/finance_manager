@@ -1,6 +1,7 @@
 package org.finance_manager;
 
 import org.finance_manager.service.DemoApp;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,6 +22,8 @@ public class Main {
             dbInitializer.initDb();
           DemoApp.play();
         }
+
+
 
 
     }

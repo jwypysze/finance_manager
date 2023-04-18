@@ -48,4 +48,14 @@ public class IncomeService {
         Income byIncomeSumAndDate = incomeRepository.findByIncomeSumAndDate(incomeSum, incomeDate);
         incomeRepository.deleteIncomeByIncomeSumAndDate(byIncomeSumAndDate);
     }
+
+    public List<SimpleIncomeDto> findIncomesByTheRangeOfDates(LocalDate fromDate, LocalDate toDate) {
+        List<Income> incomesByTheRangeOfDates = incomeRepository.findIncomesByTheRangeOfDates(fromDate, toDate);
+        return incomesByTheRangeOfDates.stream()
+                .map(i -> new SimpleIncomeDto(i.getId(), i.getIncomeSum(),
+                        i.getIncomeDate(), i.getComment()))
+                .toList();
+    }
+
+
 }
