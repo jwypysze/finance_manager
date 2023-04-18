@@ -20,8 +20,8 @@ public class CategoryService {
     public void addCategory(String categoryName) throws IllegalAccessException, IllegalArgumentException {
         List<SimpleCategoryDto> all = findAll();
         for (SimpleCategoryDto s : all) {
-            String categoryName1 = s.getCategoryName();
-            if (categoryName1.equalsIgnoreCase(categoryName)) {
+            String nameOfCategory = s.getCategoryName();
+            if (nameOfCategory.equalsIgnoreCase(categoryName)) {
                 throw new IllegalArgumentException("The provided categoryName already exists!");
             }
         }

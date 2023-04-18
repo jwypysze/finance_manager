@@ -16,13 +16,13 @@ public class SimpleExpenseDto {
     private LocalDate expenseDate;
     private String comment;
     private Category category;
-    private Long categoryId;
+    private String categoryName;
 
-    public SimpleExpenseDto(Long id, Double expenseSum, LocalDate expenseDate, String comment, Long categoryId) {
+    public SimpleExpenseDto(Long id, Double expenseSum, LocalDate expenseDate, String comment, String categoryName) {
         this.id = id;
         this.expenseSum = expenseSum;
         this.expenseDate = expenseDate;
         this.comment = comment;
-        this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 }

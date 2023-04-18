@@ -7,7 +7,6 @@ import org.finance_manager.entity.Expense;
 import org.finance_manager.repository.ExpenseRepository;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +32,7 @@ public class ExpenseService {
         return expenses.stream()
                 .map(expense -> new SimpleExpenseDto(expense.getId(),
                         expense.getExpenseSum(), expense.getExpenseDate(),
-                        expense.getComment(), expense.getCategory().getId()))
+                        expense.getComment(), expense.getCategory().getCategoryName()))
                 .toList();
     }
 
@@ -47,7 +46,7 @@ public class ExpenseService {
         List<Expense> expensesByTheRangeOfDates = expenseRepository.findExpensesByTheRangeOfDates(fromDate, toDate);
         return expensesByTheRangeOfDates.stream()
                     .map(e -> new SimpleExpenseDto(e.getId(), e.getExpenseSum(),
-                        e.getExpenseDate(), e.getComment(), e.getCategory().getId()))
+                        e.getExpenseDate(), e.getComment(), e.getCategory().getCategoryName()))
                     .toList();
     }
 
@@ -55,7 +54,7 @@ public class ExpenseService {
         List<Expense> expensesByCategoryName = expenseRepository.findExpensesByCategoryName(category);
         return expensesByCategoryName.stream()
                 .map(e -> new SimpleExpenseDto(e.getId(), e.getExpenseSum(),
-                        e.getExpenseDate(), e.getComment(), e.getCategory().getId()))
+                        e.getExpenseDate(), e.getComment(), e.getCategory().getCategoryName()))
                 .toList();
     }
 }

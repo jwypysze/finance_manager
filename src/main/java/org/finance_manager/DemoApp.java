@@ -126,11 +126,11 @@ public class DemoApp {
                     List<SimpleExpenseDto> allExpenses = expenseService.findAll();
                     if (!allExpenses.isEmpty()) {
                         System.out.println(ANSI_RED + "\t\t\t\t\t\t\t\t\t\tEXPENSES" + ANSI_RESET);
-                        System.out.printf("%10s %10s %15s %30s %15s %n", "ID", "SUM", "DATE", "COMMENT", "CATEGORY ID");
+                        System.out.printf("%10s %10s %15s %30s %15s %n", "ID", "SUM", "DATE", "COMMENT", "CATEGORY NAME");
                         allExpenses.forEach(expense ->
-                                System.out.printf("%10d %10.2f %15tF %30s %15d %n",
+                                System.out.printf("%10d %10.2f %15tF %30s %15s %n",
                                         expense.getId(), expense.getExpenseSum(), expense.getExpenseDate(),
-                                        expense.getComment(), expense.getCategoryId()));
+                                        expense.getComment(), expense.getCategoryName()));
                     } else {
                         System.err.println("The expense table is empty.");
                     }
