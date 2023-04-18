@@ -43,20 +43,9 @@ public class CategoryService {
                 .toList();
     }
 
-
-    public List<SimpleCategoryDto> findByCategoryName(String categoryName) {
-        Category categoryToBeFindByName = categoryRepository.findByCategoryName(categoryName.toLowerCase());
-        List<Category> categories = Arrays.asList(categoryToBeFindByName);
-        return categories.stream()
-                .map(category -> new SimpleCategoryDto(category.getId(), category.getCategoryName())).toList();
-    }
-
-
-
     public void deleteCategoryByName(String nameOfCategoryToDelete) throws NoResultException {
         Category category = categoryRepository.findByCategoryName(nameOfCategoryToDelete);
         categoryRepository.deleteCategoryByName(category);
-
     }
 }
 

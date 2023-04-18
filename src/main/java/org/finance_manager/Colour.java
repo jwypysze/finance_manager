@@ -1,4 +1,4 @@
-package org.finance_manager.service;
+package org.finance_manager;
 
 public class Colour {
     public static final String ANSI_RESET = "\u001B[0m";

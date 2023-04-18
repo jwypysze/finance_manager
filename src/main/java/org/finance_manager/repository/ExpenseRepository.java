@@ -29,13 +29,6 @@ public class ExpenseRepository {
         return new HashSet<>(expenses);
     }
 
-    public Expense findById(long selectedExpenseId) {
-        EntityManager entityManager = DbConnection.getEntityManager();
-        Expense expense = entityManager.find(Expense.class, selectedExpenseId);
-        entityManager.close();
-        return expense;
-    }
-
     public Expense findByExpenseSumAndDate(Double expenseSum, LocalDate expenseDate) throws NoResultException {
         EntityManager entityManager = DbConnection.getEntityManager();
         TypedQuery<Expense> query = entityManager.createQuery
@@ -52,7 +45,6 @@ public class ExpenseRepository {
         entityManager.getTransaction().commit();
         entityManager.close();
     }
-
 
     public List<Expense> findExpensesByTheRangeOfDates(LocalDate fromDate, LocalDate toDate) {
         EntityManager entityManager = DbConnection.getEntityManager();
@@ -71,4 +63,11 @@ public class ExpenseRepository {
         return query.getResultList();
     }
 
+    public Double findSumOfExpensesByCategory(Category category) {
+        EntityManager entityManager = DbConnection.getEntityManager();
+        TypedQuery<Double> query = entityManager.createQuery
+                ("SELECT SUM(e.expenseSum) FROM Expense e WHERE e.category = :category", Double.class);
+        query.setParameter("category", category);
+        return query.getSingleResult();
+    }
 }

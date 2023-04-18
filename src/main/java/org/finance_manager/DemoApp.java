@@ -1,4 +1,4 @@
-package org.finance_manager.service;
+package org.finance_manager;
 
 import jakarta.persistence.NoResultException;
 import org.finance_manager.dto.SimpleCategoryDto;
@@ -8,14 +8,15 @@ import org.finance_manager.entity.Category;
 import org.finance_manager.repository.CategoryRepository;
 import org.finance_manager.repository.ExpenseRepository;
 import org.finance_manager.repository.IncomeRepository;
+import org.finance_manager.service.CategoryService;
+import org.finance_manager.service.ExpenseService;
+import org.finance_manager.service.IncomeService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
-import static org.finance_manager.service.Colour.*;
+import static org.finance_manager.Colour.*;
 
 public class DemoApp {
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -204,7 +205,28 @@ public class DemoApp {
                     }
                 }
                 case 9 -> {
-
+                    Set<Category> allCategoriesSet = categoryRepository.findAll();
+                    List<Category> allCategories = new ArrayList<>(allCategoriesSet);
+                    int size = allCategories.size();
+                    String[] info = new String[size];
+                    for (int i = 0; i < allCategories.size(); i++) {
+                        List<SimpleExpenseDto> expensesByCategoryName =
+                                expenseService.findExpensesByCategoryName(allCategories.get(i));
+                        if (!expensesByCategoryName.isEmpty()) {
+                            String categoryName = allCategories.get(i).getCategoryName();
+                            Double sumOfExpensesByCategory =
+                                    expenseRepository.findSumOfExpensesByCategory(allCategories.get(i));
+                            String in = "Category name: " + categoryName
+                                    + ", the sum od expenses: " + sumOfExpensesByCategory
+                                    + ", number of expenses: " + expensesByCategoryName.size();
+                            info[i] = in;
+                        }
+                    }
+                    for (String s : info) {
+                        if (s != null) {
+                            System.out.println(ANSI_BLUE + s + ANSI_RESET);
+                        }
+                    }
                 }
                 case 10 -> {
                     List<SimpleIncomeDto> simpleIncomeDtoList = incomeService.findAll();
@@ -216,7 +238,6 @@ public class DemoApp {
                     }
                 }
                 case 11 -> {
-                    //wyświetl saldo
                     System.out.println("In this option you can show the balance in the provided range of dates (FROM - TO)");
                     System.out.println("Type the first date (FROM)");
                     System.out.println("Please use format YYYY-MM-DD");

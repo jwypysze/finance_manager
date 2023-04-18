@@ -1,8 +1,6 @@
 package org.finance_manager.service;
 
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
-import org.finance_manager.DbConnection;
 import org.finance_manager.dto.SimpleExpenseDto;
 import org.finance_manager.entity.Category;
 import org.finance_manager.entity.Expense;
@@ -39,15 +37,6 @@ public class ExpenseService {
                 .toList();
     }
 
-    public List<SimpleExpenseDto> findByExpenseSumAndDate(Double expenseSum, LocalDate expenseDate) {
-        Expense expense = expenseRepository.findByExpenseSumAndDate(expenseSum, expenseDate);
-        List<Expense> expenses = Arrays.asList(expense);
-        return expenses.stream()
-                .map(e -> new SimpleExpenseDto(e.getId(), e.getExpenseSum(),
-                        e.getExpenseDate(), e.getComment(), e.getCategory().getId()))
-                .toList();
-    }
-
     public void deleteExpenseByExpenseSumAndDate(Double expenseSum, LocalDate expenseDate) throws NoResultException {
         Expense byExpenseSumAndDate = expenseRepository.findByExpenseSumAndDate(expenseSum, expenseDate);
         expenseRepository.deleteExpenseByExpenseSumAndDate(byExpenseSumAndDate);
@@ -69,5 +58,4 @@ public class ExpenseService {
                         e.getExpenseDate(), e.getComment(), e.getCategory().getId()))
                 .toList();
     }
-
 }

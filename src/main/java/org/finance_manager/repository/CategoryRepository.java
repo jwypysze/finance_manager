@@ -27,8 +27,6 @@ public class CategoryRepository {
         return new HashSet<>(categories);
     }
 
-
-
     public Category findByCategoryName(String categoryName) throws NoResultException {
         EntityManager entityManager = DbConnection.getEntityManager();
         TypedQuery<Category> query = entityManager.createQuery
@@ -44,5 +42,4 @@ public class CategoryRepository {
         entityManager.getTransaction().commit();
         entityManager.close();
     }
-
 }

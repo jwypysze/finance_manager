@@ -7,7 +7,6 @@ import org.finance_manager.DbConnection;
 import org.finance_manager.entity.Income;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,13 +25,6 @@ public class IncomeRepository {
         List<Income> incomes = entityManager.createQuery("select a from Income a", Income.class).getResultList();
         entityManager.close();
         return new HashSet<>(incomes);
-    }
-
-    public Income findById(long selectedIncomeId) {
-        EntityManager entityManager = DbConnection.getEntityManager();
-        Income income = entityManager.find(Income.class, selectedIncomeId);
-        entityManager.close();
-        return income;
     }
 
     public Income findByIncomeSumAndDate(Double incomeSum, LocalDate incomeDate) throws NoResultException {
@@ -60,5 +52,4 @@ public class IncomeRepository {
         query.setParameter("toDate", toDate);
         return query.getResultList();
     }
-
 }

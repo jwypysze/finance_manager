@@ -36,14 +36,6 @@ public class IncomeService {
                 .toList();
     }
 
-    public List<SimpleIncomeDto> findByIncomeSumAndDate(Double incomeSum, LocalDate incomeDate) {
-        Income income = incomeRepository.findByIncomeSumAndDate(incomeSum, incomeDate);
-        List<Income> incomes = Arrays.asList(income);
-        return incomes.stream()
-                .map(i -> new SimpleIncomeDto(i.getId(), i.getIncomeSum(), i.getIncomeDate(), i.getComment()))
-                .toList();
-    }
-
     public void deleteIncomeByIncomeSumAndDate(Double incomeSum, LocalDate incomeDate) throws NoResultException {
         Income byIncomeSumAndDate = incomeRepository.findByIncomeSumAndDate(incomeSum, incomeDate);
         incomeRepository.deleteIncomeByIncomeSumAndDate(byIncomeSumAndDate);
@@ -56,6 +48,4 @@ public class IncomeService {
                         i.getIncomeDate(), i.getComment()))
                 .toList();
     }
-
-
 }
