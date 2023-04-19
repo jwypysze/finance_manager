@@ -6,7 +6,6 @@ import org.finance_manager.dto.SimpleCategoryDto;
 import org.finance_manager.entity.Category;
 import org.finance_manager.repository.CategoryRepository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
