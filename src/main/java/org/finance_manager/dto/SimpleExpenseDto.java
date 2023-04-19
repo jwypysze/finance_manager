@@ -25,4 +25,11 @@ public class SimpleExpenseDto {
         this.comment = comment;
         this.categoryName = categoryName;
     }
+
+    @Override
+    public String toString() {
+        return "SimpleExpenseDto" +
+                "(id = " + id + ", expenseSum = " + expenseSum
+                + ", expenseDate = " + expenseDate + ", comment = " + comment + ", categoryName = " + categoryName + ")";
+    }
 }
