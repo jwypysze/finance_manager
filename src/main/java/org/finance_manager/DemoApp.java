@@ -60,7 +60,7 @@ public class DemoApp {
                         System.err.println("The category doesn't exist yet. It will be added to the category table.");
                         try {
                             categoryService.addCategory(categoryName);
-                        } catch (IllegalAccessException ex) {
+                        } catch (IllegalArgumentException ex) {
                             System.err.println(ex.getMessage());;
                         }
                         Category category = categoryRepository.findByCategoryName(categoryName);
@@ -294,7 +294,7 @@ public class DemoApp {
                     String categoryName = SCANNER.nextLine();
                     try {
                         categoryService.addCategory(categoryName);
-                    } catch (IllegalAccessException | IllegalArgumentException e) {
+                    } catch (IllegalArgumentException e) {
                         System.err.println(e.getMessage());;
                     }
                 }

@@ -28,7 +28,7 @@ public class Expense {
 
     private String comment;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "category_id")
     private Category category;
 

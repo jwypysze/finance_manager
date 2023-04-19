@@ -55,4 +55,48 @@ public class CategoryServiceTest {
         List<SimpleCategoryDto> allCategries = categoryService.findAll();
         Assertions.assertEquals(1, allCategries.size());
     }
+
+    @Test
+    public void shouldThrowMessageOfNewIllegalArgumentExceptionAfterAddingAlreadyExistingCategoryName() {
+        try {
+            categoryService.addCategory("school");
+            fail("Exception wasn't thrown");
+        } catch (IllegalArgumentException e) {
+            Assertions.assertEquals("The provided categoryName already exists!", e.getMessage());
+        }
+    }
+
+    @Test
+    public void shouldThrowMessageOfNewIllegalArgumentExceptionAfterAddingEmptyCategoryName() {
+        try {
+            categoryService.addCategory("");
+            fail("Exception wasn't thrown");
+        } catch (IllegalArgumentException e) {
+            Assertions.assertEquals("Category name cannot be null or empty", e.getMessage());
+        }
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceeds() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            categoryService.addCategory("school");
+        });
+
+        String expectedMessage = "The provided categoryName already exists!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void whenExceptionThrown_thenAssertionSucceeds2() {
+        IllegalArgumentException illegalArgumentException =
+                assertThrows(IllegalArgumentException.class,
+                        () -> {categoryService.addCategory("");
+                });
+        String expectedMessage = "Category name cannot be null or empty";
+        String actualMessage = illegalArgumentException.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 }

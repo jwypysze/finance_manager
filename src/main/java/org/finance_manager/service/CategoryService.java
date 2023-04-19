@@ -16,7 +16,7 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public void addCategory(String categoryName) throws IllegalAccessException, IllegalArgumentException {
+    public void addCategory(String categoryName) throws IllegalArgumentException {
         List<SimpleCategoryDto> all = findAll();
         for (SimpleCategoryDto s : all) {
             String nameOfCategory = s.getCategoryName();
@@ -30,7 +30,7 @@ public class CategoryService {
 
             categoryRepository.insert(category);
         } else {
-            throw new IllegalAccessException("Category name cannot be null or empty");
+            throw new IllegalArgumentException("Category name cannot be null or empty");
         }
     }
 
